@@ -1,0 +1,48 @@
+#chat-box-wrapper {
+    height: 0;
+    flex: 1 0 auto;
+}
+
+#chat-box {
+    height: 100%;
+    overflow-y: auto;
+    margin: 0;
+}
+
+#chat-box > li {
+    width: 100%;
+    padding: 3px;
+}
+
+#chat-box > li:nth-child(even) {
+    background-color: #fff1;
+}
+
+#chat-box > li::marker {
+    display: none;
+}
+
+#chat-box > li > p {
+    margin: 0;
+    color: #ddd;
+}
+
+#chat-box > li > b {
+    color: white;
+}
+
+#chat-box > li > b::before {
+    content: "person";
+    /*noinspection CssNoGenericFontName*/
+    font-family: "Material Icons";
+    position: relative;
+    top: 3px;
+}
+
+#auto-scroll-toggle:checked + span.lever {
+    background-color: yellow;
+}
+
+#auto-scroll-toggle:checked + span.lever::after {
+    background-color: #d2d200;
+}

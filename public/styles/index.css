@@ -1,0 +1,94 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+@keyframes logo-animation {
+    from {
+        top: -60px;
+        opacity: 0;
+    }
+
+    to {
+        top: 0;
+        opacity: 1;
+    }
+}
+
+#logo {
+    position: relative;
+    animation-name: logo-animation;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-timing-function: cubic-bezier(0, 0, 0, 1);
+}
+
+#create-room-btn-wrapper {
+    position: relative;
+    width: 50%;
+    text-align: center;
+}
+
+#create-room-btn {
+    transition: scale 400ms, opacity 400ms;
+    transition-timing-function: cubic-bezier(0, 0, 0, 1);
+    scale: 1;
+}
+
+#creating-room-label {
+    position: absolute;
+    top: 7px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 99;
+    color: white;
+    font-size: 1.5em;
+    opacity: 0;
+    scale: 1.5;
+    pointer-events: none;
+    transition: scale 400ms, opacity 400ms;
+    transition-timing-function: cubic-bezier(0, 0, 0, 1);
+}
+
+@keyframes creating-room-label-flash {
+    from { opacity: 0.5; }
+    50% { opacity: 1; }
+    to { opacity: 0.5; }
+}
+
+#create-room-btn-wrapper[data-clicked="1"] > #create-room-btn {
+    opacity: 0;
+    scale: 0.7;
+    pointer-events: none;
+}
+
+#create-room-btn-wrapper[data-clicked="1"] > #creating-room-label {
+    animation-name: creating-room-label-flash;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    scale: 1;
+    opacity: 1;
+}
+
+@keyframes account-info-fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+#account-info {
+    opacity: 0;
+    color: white;
+    font-size: 1.5rem;
+    animation-name: account-info-fade-in;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+    animation-delay: 750ms;
+}

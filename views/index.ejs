@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>QuickStream</title>
+        <link rel="stylesheet" href="/styles/main.css" />
+        <link rel="stylesheet" href="/styles/index.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <img id="logo" src="/img/logo.png" style="width: clamp(1px, 100%, 770px);" />
+        <label id="account-info">
+            <i class="material-icons" style="font-size: inherit; position: relative; top: 4px;">account_circle</i>
+            <span id="username-display">...</span>
+            <button id="change-username-btn" class="btn-small waves-effect waves-dark yellow black-text">
+                <i class="material-icons left">edit</i>
+                Zmień
+            </button>
+        </label>
+        <hr class="animated-hr" style="color: #fff2; margin: 10px 0;"/>
+        <div id="create-room-btn-wrapper">
+            <button id="create-room-btn" class="waves-effect waves-light btn-large red" onclick="setTimeout(createRoom, 100);">
+                <i class="material-icons left">cast_connected</i>
+                Rozpocznij transmisję
+            </button>
+            <label id="creating-room-label">
+                <i class="material-icons" style="position: relative; top: 4px;">hourglass_bottom</i>
+                Tworzenie sesji...
+            </label>
+        </div>
+
+        <div class="fixed-action-btn">
+            <a class="btn-floating btn-large white">
+                <i class="large material-icons black-text">build</i>
+            </a>
+            <ul>
+                <li>
+                    <a class="btn-floating green" data-tooltip="Przetestuj przechwytywanie ekranu">
+                        <i class="material-icons">monitor_heart</i>
+                    </a>
+                </li>
+                <li>
+                    <a class="btn-floating blue" data-tooltip="Pobierz nagrywarkę">
+                        <i class="material-icons">download</i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div id="setup-profile-modal" class="modal">
+            <div class="modal-content">
+                <h4>Witaj nowy użytkowniku!</h4>
+                <p>
+                    Aby móc identyfikować się na platformie, ustaw nazwę użytkownika. Zostanie ona zapamiętana i będzie
+                    używana za każdym razem w przyszłości, ale można ją zmienić.
+                </p>
+                <div style="width: 100%; text-align: center;">
+                    <input id="profile-setup-username-input" type="text" placeholder="Wpisz swoją nazwę użytkownika tutaj!" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="profile-setup-continue-btn" class="modal-close waves-effect waves-green btn-flat" disabled>
+                    Kontynuuj do platformy
+                </button>
+            </div>
+        </div>
+        <script src="/js/index.js" defer></script>
+    </body>
+</html>

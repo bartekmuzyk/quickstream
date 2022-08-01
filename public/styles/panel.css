@@ -1,0 +1,76 @@
+@import "components/chat.css";
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+#link-top-bar {
+    border-bottom: 1px solid #fff2;
+    flex-basis: 60px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+}
+
+#link-alert {
+    flex-grow: 1;
+    margin-left: 10px;
+    background-color: #F44336;
+    padding: 0 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 20px;
+}
+
+#status-bar {
+    flex: 0 0 60px;
+    border-top: 1px solid #fff2;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+}
+
+#live-status {
+    font-size: 2rem;
+    color: white;
+    font-weight: bold;
+    flex-grow: 1;
+}
+
+#live-status-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 20px;
+    margin: 0 20px;
+}
+
+#status-bar[data-livestatus="stopped"] > #live-status-dot {
+    background-color: #F44336;
+}
+
+#status-bar[data-livestatus="progress"] > #live-status-dot {
+    background-color: #FDD835;
+}
+
+#status-bar[data-livestatus="started"] > #live-status-dot {
+    background-color: #4CAF50;
+}
+
+#status-bar[data-livestatus="connecting"] > #live-status-dot {
+    background-color: gray;
+}
+
+#viewers-list > div {
+    color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#viewers-list > div:nth-child(even) {
+    background-color: #fff1;
+}
