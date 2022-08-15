@@ -40,7 +40,7 @@
             </div>
             <div style="flex: 1 1 auto; display: flex; flex-direction: column;">
                 <div style="width: 100%; flex: 1 1 auto; position: relative; background-color: black;">
-                    <video id="stream-preview" width="100%" height="100%"></video>
+                    <video id="stream-preview" width="100%" height="100%" muted></video>
                 </div>
             </div>
             <div style="flex: 0 0 350px; border-left: 1px solid #fff2; display: flex; flex-direction: column;">
@@ -72,6 +72,10 @@
         <div id="status-bar" data-livestatus="connecting">
             <div id="live-status-dot"></div>
             <label id="live-status">Łączenie z serwerem...</label>
+            <label style="margin-right: 10px;">
+                <input id="with-audio-checkbox" type="checkbox" class="filled-in" checked="checked" />
+                <span>Udostępnij dźwięk mikrofonu</span>
+            </label>
             <button id="go-live-btn" class="waves-effect waves-dark btn yellow black-text" disabled>
                 <i class="material-icons left">cell_tower</i>
                 Rozpocznij transmisję

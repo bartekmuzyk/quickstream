@@ -22,10 +22,18 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
+/**
+ * @param req {Request}
+ * @returns {boolean}
+ */
+function isRequestFromDesktopApp(req) {
+	return req.headers["user-agent"].includes("quick-stream-recorder");
+}
 
 app.get("/", (req, res) => {
-	res.render("index");
+	res.render("index", {
+		DESKTOP_APP: isRequestFromDesktopApp(req)
+	});
 });
 
 app.post("/sesja", (req, res) => {
@@ -52,7 +60,9 @@ app.get("/panel", (req, res) => {
 		return;
 	}
 
-	res.render("panel");
+	res.render("panel", {
+		DESKTOP_APP: isRequestFromDesktopApp(req)
+	});
 });
 
 app.get("/ogladaj", (req, res) => {

@@ -16,6 +16,7 @@ const connectionErrorModal = M.Modal.getInstance(document.getElementById("connec
 const disconnectReasonDisplay = document.getElementById("disconnect-reason");
 const disconnectionModal = M.Modal.getInstance(document.getElementById("disconnection-modal"));
 const viewersList = document.getElementById("viewers-list");
+const withAudioCheckbox = document.getElementById("with-audio-checkbox");
 
 /**
  * @param status {"stopped"|"progress"|"started"}
@@ -58,9 +59,11 @@ socket.on("connect", () => {
 	setStreamStateDisplay("stopped");
 	goLiveBtn.disabled = false;
 	M.toast({ html: "Połączono z serwerem", displayLength: 1500 });
+
 	window.onbeforeunload = ev => {
-		ev.returnValue = "a";
-		return "a";
+		const message = "Jeżeli stream został już rozpoczęty, zostanie on zakończony przy odświeżeniu strony.";
+		ev.returnValue = message;
+		return message;
 	};
 });
 
@@ -169,8 +172,16 @@ document.getElementById("copy-safe-link-btn").onclick = () => {
 		});
 };
 
+/**
+ * @typedef {Object} StreamSource
+ * @property {string} id id of the source. will begin with `window:` if the source is a window, and with `screen:` if it is a screen
+ * @property {string} name app/screen name
+ * @property {?string} icon icon data as a data URL. `undefined` if the source is a screen.
+ */
+
 goLiveBtn.onclick = async () => {
 	goLiveBtn.disabled = true;
+	withAudioCheckbox.parentElement.style.visibility = "hidden";
 	setStreamStateDisplay("progress");
 
 	const stream = await navigator.mediaDevices.getDisplayMedia({
@@ -179,8 +190,16 @@ goLiveBtn.onclick = async () => {
 	});
 	streamPreview.srcObject = stream;
 	await streamPreview.play();
-	currentStream = stream;
 
+	if (withAudioCheckbox.checked) {
+		const audioStream = await navigator.mediaDevices.getUserMedia({
+			video: false,
+			audio: true
+		});
+		stream.addTrack(audioStream.getTracks()[0]);
+	}
+
+	currentStream = stream;
 	socket.emit("stream:start");
 };
 

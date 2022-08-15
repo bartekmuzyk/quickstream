@@ -80,6 +80,7 @@ socket.on("rtc:iceCandidate", async (socketId, candidate) => {
 async function startRTCHandshake() {
 	console.log("starting RTC handshake");
 	peerConnection.addTransceiver("video");
+	peerConnection.addTransceiver("audio");
 	peerConnection.getTransceivers().forEach(t => t.direction = "recvonly");
 	const offer = await peerConnection.createOffer();
 	await peerConnection.setLocalDescription(offer);

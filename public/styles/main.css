@@ -16,6 +16,11 @@ html, body {
     border-radius: 10px !important;
 }
 
+[type="checkbox"].filled-in:checked + span:not(.lever)::after {
+    background-color: #ffeb3b !important;
+    border-color: #ffeb3b !important;
+}
+
 .fg-emoji-container nav, .fg-emoji-container nav .nav-wrapper i, .fg-emoji-container nav a.sidenav-trigger, .fg-emoji-container nav a.sidenav-trigger i {
     height: revert;
     line-height: revert;
