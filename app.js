@@ -216,7 +216,9 @@ app.use((err, req, res) => {
 
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
-server.listen(port);
+server.listen(port, () => {
+	console.log(`Listening on port :${port}`);
+});
 server.on('error', onError);
 server.on('listening', onListening);
 
