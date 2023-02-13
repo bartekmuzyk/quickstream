@@ -17,7 +17,10 @@ class Chat {
 
 		if (!this.fullAutoScrollSupport) {
 			HTMLDivElement.prototype.scrollTopMax = Infinity;
-			this.autoScrollSwitch.style.display = "block";
+
+			if (this.autoScrollSwitch) {
+				this.autoScrollSwitch.style.display = "block";
+			}
 		}
 
 		this.messageEditor.oninput = () => {
@@ -68,7 +71,7 @@ class Chat {
 		const autoScroll = this.fullAutoScrollSupport ?
 			this.chatBox.scrollTop === this.chatBox.scrollTopMax
 			:
-			this.autoScrollToggle.checked;
+			(this.autoScrollToggle?.checked ?? true);
 
 		this.chatBox.appendChild(messageElement);
 
