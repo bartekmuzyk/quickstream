@@ -147,6 +147,7 @@ socket.on("rtc:offer", async (offer, socketId) => {
 	await peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
 
 	const answer = await peerConnection.createAnswer();
+	answer.sdp = answer.sdp.replace("useinbandfec=1", "useinbandfec=1; stereo=1; maxaveragebitrate=510000");
 	await peerConnection.setLocalDescription(answer);
 
 	console.log("sending answer");
@@ -186,7 +187,15 @@ goLiveBtn.onclick = async () => {
 
 	const stream = await navigator.mediaDevices.getDisplayMedia({
 		video: true,
-		audio: true
+		audio: {
+			autoGainControl: false,
+			channelCount: 2,
+			echoCancellation: false,
+			latency: 0,
+			noiseSuppression: false,
+			sampleRate: 48000,
+			sampleSize: 16
+		}
 	});
 	streamPreview.srcObject = stream;
 	await streamPreview.play();
