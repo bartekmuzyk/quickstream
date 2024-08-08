@@ -61,7 +61,7 @@ socket.on("connect", () => {
 	M.toast({ html: "Połączono z serwerem", displayLength: 1500 });
 
 	window.onbeforeunload = ev => {
-		const message = "Jeżeli stream został już rozpoczęty, zostanie on zakończony przy odświeżeniu strony.";
+		const message = "Sesja zostanie utracona przy odświeżaniu strony.";
 		ev.returnValue = message;
 		return message;
 	};

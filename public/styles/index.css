@@ -31,13 +31,13 @@ body {
     text-align: center;
 }
 
-#create-room-btn {
+#create-room-btn-wrapper > button {
     transition: scale 400ms, opacity 400ms;
     transition-timing-function: cubic-bezier(0, 0, 0, 1);
     scale: 1;
 }
 
-#creating-room-label {
+#create-room-btn-wrapper > label {
     position: absolute;
     top: 7px;
     left: 0;
@@ -59,13 +59,13 @@ body {
     to { opacity: 0.5; }
 }
 
-#create-room-btn-wrapper[data-clicked="1"] > #create-room-btn {
+#create-room-btn-wrapper[data-clicked="1"] > button {
     opacity: 0;
     scale: 0.7;
     pointer-events: none;
 }
 
-#create-room-btn-wrapper[data-clicked="1"] > #creating-room-label {
+#create-room-btn-wrapper[data-clicked="1"] > label {
     animation-name: creating-room-label-flash;
     animation-duration: 1s;
     animation-iteration-count: infinite;
@@ -90,5 +90,9 @@ body {
     animation-name: account-info-fade-in;
     animation-duration: 2s;
     animation-fill-mode: forwards;
-    animation-delay: 750ms;
+    animation-delay: 250ms;
+}
+
+#username-display {
+    display: inline;
 }

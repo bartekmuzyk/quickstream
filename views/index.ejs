@@ -3,52 +3,55 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>QuickStream</title>
-        <link rel="stylesheet" href="/styles/main.css" />
+        <% include common/head.ejs %>
         <link rel="stylesheet" href="/styles/index.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-        <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
     </head>
     <body>
         <img id="logo" src="/img/logo.png" style="width: clamp(1px, 100%, 770px);" />
-        <label id="account-info">
-            <i class="material-icons" style="font-size: inherit; position: relative; top: 4px;">account_circle</i>
-            <span id="username-display">...</span>
-            <button id="change-username-btn" class="btn-small waves-effect waves-dark yellow black-text">
-                <i class="material-icons left">edit</i>
+        <div id="account-info">
+            <i>account_circle</i>
+            <p id="username-display">...</p>
+            <button id="change-username-btn" class="border" data-ui="#setup-profile-modal">
+                <i>edit</i>
                 Zmień
             </button>
-        </label>
-        <hr class="animated-hr" style="color: #fff2; margin: 10px 0;"/>
+        </div>
+        <hr class="animated-hr" style="background-color: #fff5; margin: 10px 0;"/>
         <div id="create-room-btn-wrapper">
-            <button id="create-room-btn" class="waves-effect waves-light btn-large red" onclick="setTimeout(createRoom, 100);">
-                <i class="material-icons left">cast_connected</i>
+            <button onclick="createRoom();">
+                <i>cast_connected</i>
                 Rozpocznij transmisję
             </button>
-            <label id="creating-room-label">
-                <i class="material-icons" style="position: relative; top: 4px;">hourglass_bottom</i>
+            <label>
+                <i>hourglass_bottom</i>
                 Tworzenie sesji...
             </label>
         </div>
 
-        <div id="setup-profile-modal" class="modal">
-            <div class="modal-content">
-                <h4>Witaj nowy użytkowniku!</h4>
-                <p>
-                    Aby móc identyfikować się na platformie, ustaw nazwę użytkownika. Zostanie ona zapamiętana i będzie
-                    używana za każdym razem w przyszłości, ale można ją zmienić.
-                </p>
-                <div style="width: 100%; text-align: center;">
-                    <input id="profile-setup-username-input" type="text" placeholder="Wpisz swoją nazwę użytkownika tutaj!" />
-                </div>
+        <div class="overlay blur"></div>
+
+        <dialog id="setup-profile-modal" class="modal">
+            <h5>Twoja nazwa użytkownika</h5>
+            <div>
+                Aby móc identyfikować się na platformie, ustaw nazwę użytkownika. Zostanie ona zapamiętana i będzie
+                używana za każdym razem w przyszłości i <b>można ją zmienić</b>.
             </div>
-            <div class="modal-footer">
-                <button id="profile-setup-continue-btn" class="modal-close waves-effect waves-green btn-flat" disabled>
+            <div class="field label border">
+                <input id="profile-setup-username-input" type="text">
+                <label>Wpisz Swoją nazwę użytkownika tutaj!</label>
+            </div>
+            <nav class="right-align no-space">
+                <button class="transparent link" id="profile-setup-cancel-btn" data-ui="#setup-profile-modal" disabled>
+                    Anuluj
+                </button>
+                <button class="transparent link" id="profile-setup-continue-btn" disabled>
                     Kontynuuj do platformy
                 </button>
-            </div>
-        </div>
+            </nav>
+        </dialog>
+
+        <div id="session-error-snackbar" class="snackbar error">Nie udało się utworzyć sesji.</div>
+
         <script src="/js/index.js" defer></script>
     </body>
 </html>

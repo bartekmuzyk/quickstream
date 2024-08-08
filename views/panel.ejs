@@ -3,17 +3,14 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>QuickStream - Panel</title>
-        <link rel="stylesheet" href="/styles/main.css" />
+        <% include common/head.ejs %>
         <link rel="stylesheet" href="/styles/panel.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-        <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
         <script src="js/vanillaEmojiPicker.js"></script>
     </head>
     <body>
         <div id="link-top-bar">
-            <button id="copy-safe-link-btn" class="waves-effect waves-light btn-flat white-text">
+            <img src="img/logo.png" height="45" style="margin-left: 20px;" />
+            <button id="copy-safe-link-btn" class="border">
                 <i class="material-icons left">link</i>
                 Kopiuj bezpieczny link
             </button>
@@ -26,7 +23,6 @@
                     jego posiadanie, będzie mógł on kontrolować Twój strumień.
                 </p>
             </div>
-            <img src="img/logo.png" height="45" style="margin-left: 20px;" />
         </div>
         <div style="flex: 1 0 auto; display: flex; flex-direction: row;">
             <div style="flex: 0 0 300px; border-right: 1px solid #fff2;">
