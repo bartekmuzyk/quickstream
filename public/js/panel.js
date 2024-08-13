@@ -1,20 +1,15 @@
-M.AutoInit(null);
-M.Modal.init(document.querySelectorAll(".modal"), {
-	dismissible: false
-});
-
 /** @type {HTMLButtonElement} */
 const goLiveBtn = document.getElementById("go-live-btn");
 /** @type {HTMLButtonElement} */
 const stopStreamBtn = document.getElementById("stop-stream-btn");
-const liveStatus = document.getElementById("live-status");
-const statusBar = document.getElementById("status-bar");
+const liveStatusText = document.getElementById("live-status-text");
+const liveStatusDot = document.getElementById("live-status-dot");
 /** @type {HTMLVideoElement} */
 const streamPreview = document.getElementById("stream-preview");
 const errorMessageDisplay = document.getElementById("error-message");
-const connectionErrorModal = M.Modal.getInstance(document.getElementById("connection-error-modal"));
+const connectionErrorModal = document.getElementById("connection-error-modal");
 const disconnectReasonDisplay = document.getElementById("disconnect-reason");
-const disconnectionModal = M.Modal.getInstance(document.getElementById("disconnection-modal"));
+const disconnectionModal = document.getElementById("disconnection-modal");
 const viewersList = document.getElementById("viewers-list");
 const withAudioCheckbox = document.getElementById("with-audio-checkbox");
 
@@ -22,12 +17,12 @@ const withAudioCheckbox = document.getElementById("with-audio-checkbox");
  * @param status {"stopped"|"progress"|"started"}
  */
 function setStreamStateDisplay(status) {
-	statusBar.setAttribute("data-livestatus", status);
+	liveStatusDot.setAttribute("data-status", status);
 
 	switch (status) {
-		case "started": liveStatus.innerText = "Transmituję na żywo"; break;
-		case "progress": liveStatus.innerText = "Proszę czekać..."; break;
-		case "stopped": liveStatus.innerText = "Transmisja wstrzymana"; break;
+		case "started": liveStatusText.innerText = "Transmituję na żywo"; break;
+		case "progress": liveStatusText.innerText = "Proszę czekać..."; break;
+		case "stopped": liveStatusText.innerText = "Transmisja wstrzymana"; break;
 	}
 }
 
@@ -58,7 +53,7 @@ const socket = io(undefined, {
 socket.on("connect", () => {
 	setStreamStateDisplay("stopped");
 	goLiveBtn.disabled = false;
-	M.toast({ html: "Połączono z serwerem", displayLength: 1500 });
+	ui("#connected-message-snackbar", 1500);
 
 	window.onbeforeunload = ev => {
 		const message = "Sesja zostanie utracona przy odświeżaniu strony.";
@@ -98,7 +93,6 @@ socket.on("stream:viewers", viewersData => {
 		const listItem = document.createElement("div");
 
 		const userIcon = document.createElement("i");
-		userIcon.className = "material-icons white-text";
 		userIcon.innerText = "person";
 		listItem.append(userIcon);
 
@@ -144,7 +138,7 @@ socket.on("rtc:offer", async (offer, socketId) => {
 		peerConnection.addTrack(track, currentStream);
 	});
 
-	await peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
+	await peerConnection.setRemoteDescription(new RTCSessionDescription(offer));  // todo deprecated
 
 	const answer = await peerConnection.createAnswer();
 	answer.sdp = answer.sdp.replace("useinbandfec=1", "useinbandfec=1; stereo=1; maxaveragebitrate=510000");
@@ -169,7 +163,7 @@ document.getElementById("copy-safe-link-btn").onclick = () => {
 	const url = location.origin + "/ogladaj?id=" + sessionId;
 	navigator.clipboard.writeText(url)
 		.then(() => {
-			M.toast({ html: `Skopiowano&nbsp;<a href="${url}" target="_blank">link do transmisji</a>` });
+			// todo jakieś coś innego
 		});
 };
 
@@ -225,7 +219,6 @@ stopStreamBtn.onclick = () => {
 	currentStream.getTracks().forEach(track => track.stop());
 	socket.emit("stream:stop");
 
-	M.toast({ html: "Transmisja zakończona. Proszę czekać..." });
 	location.assign("/");
 };
 

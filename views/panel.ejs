@@ -5,86 +5,88 @@
         <title>QuickStream - Panel</title>
         <% include common/head.ejs %>
         <link rel="stylesheet" href="/styles/panel.css" />
-        <script src="js/vanillaEmojiPicker.js"></script>
+        <link rel="stylesheet" href="/styles/components/emojibuttonlistjs.css" />
+        <script src="/js/components/emojibuttonlistjs.js"></script>
     </head>
     <body>
-        <div id="link-top-bar">
-            <img src="img/logo.png" height="45" style="margin-left: 20px;" />
+        <div id="top">
+            <img src="img/logo.png" height="100%" style="padding: 10px;" />
+            <div style="flex-grow: 1;"></div>
             <button id="copy-safe-link-btn" class="border">
-                <i class="material-icons left">link</i>
-                Kopiuj bezpieczny link
+                <i>link</i>
+                Kopiuj link do transmisji dla widzów
             </button>
-            <div id="link-alert">
-                <i class="material-icons white-text">warning</i>
-                <p class="white-text" style="margin: 5px 0 5px 10px;">
-                    <b>Nie wysyłaj nikomu linku z paska adresu.</b>
-                    <br/>
-                    Zawiera on specjalny klucz umożliwiający Ci kontrolowanie transmisji. Jeżeli ktoś inny wejdzie w
-                    jego posiadanie, będzie mógł on kontrolować Twój strumień.
-                </p>
-            </div>
         </div>
-        <div style="flex: 1 0 auto; display: flex; flex-direction: row;">
-            <div style="flex: 0 0 300px; border-right: 1px solid #fff2;">
-                <h4 class="white-text" style="margin: 0 10px;">
-                    <i class="material-icons" style="font-size: 1em; position: relative; top: 5px;">people</i>
-                    Widzowie
-                </h4>
-                <div id="viewers-list">
 
-                </div>
-            </div>
-            <div style="flex: 1 1 auto; display: flex; flex-direction: column;">
-                <div style="width: 100%; flex: 1 1 auto; position: relative; background-color: black;">
-                    <video id="stream-preview" width="100%" height="100%" muted></video>
-                </div>
-            </div>
-            <div style="flex: 0 0 350px; border-left: 1px solid #fff2; display: flex; flex-direction: column;">
-                <h4 class="white-text" style="margin: 0 10px;">
-                    <i class="material-icons" style="font-size: 1em; position: relative; top: 5px;">chat</i>
-                    Czat na żywo
-                </h4>
-                <div id="auto-scroll-switch" class="switch" style="display: none;">
-                    <label>
-                        <input id="auto-scroll-toggle" type="checkbox">
-                        <span class="lever"></span>
-                        Auto-przewijanie
-                    </label>
-                </div>
-                <div id="chat-box-wrapper">
-                    <ul id="chat-box"></ul>
-                </div>
-                <div style="flex: 0 0 auto; display: flex; flex-direction: row; align-items: center; padding-left: 10px;">
-                    <input id="message-editor" class="white-text" type="text" placeholder="Wyślij wiadomość na czacie" />
-                    <button id="emoji-btn" class="btn-flat grey darken-4 waves-effect waves-light white-text">
-                        <i class="material-icons">mood</i>
-                    </button>
-                    <button id="send-message-btn" class="btn-flat grey darken-4 waves-effect waves-light white-text" disabled>
-                        <i class="material-icons">send</i>
-                    </button>
-                </div>
+        <div id="left">
+            <h4>
+                <i>people</i>
+                Widzowie
+            </h4>
+            <div id="viewers-list">
+
             </div>
         </div>
-        <div id="status-bar" data-livestatus="connecting">
-            <div id="live-status-dot"></div>
-            <label id="live-status">Łączenie z serwerem...</label>
-            <label style="margin-right: 10px;">
-                <input id="with-audio-checkbox" type="checkbox" class="filled-in" checked="checked" />
-                <span>Udostępnij dźwięk mikrofonu</span>
+
+        <div id="center">
+            <video id="stream-preview" muted></video>
+        </div>
+
+        <div id="right">
+            <h4>
+                <i>chat</i>
+                Czat na żywo
+            </h4>
+
+            <div id="auto-scroll-switch" class="switch" style="display: none;">
+                <label class="switch">
+                    <input id="auto-scroll-toggle" type="checkbox">
+                    <span>Auto-przewijanie</span>
+                </label>
+            </div>
+            <div id="chat-box-wrapper">
+                <ul id="chat-box"></ul>
+            </div>
+            <div style="flex: 0 0 auto; display: flex; flex-direction: row; align-items: center; padding-left: 10px;">
+                <div class="field label round small border" style="margin: 0;">
+                    <input id="message-editor" type="text">
+                    <label>Wyślij wiadomość</label>
+                </div>
+
+                <button id="emoji-btn" class="transparent circle">
+                    <i>mood</i>
+                </button>
+                <button id="send-message-btn" class="transparent circle" disabled>
+                    <i>send</i>
+                </button>
+            </div>
+        </div>
+
+        <div id="bottom">
+            <div id="live-status-dot" data-status="connecting"></div>
+            <h5 id="live-status-text" class="small">Łączenie z serwerem...</h5>
+
+            <label class="switch icon">
+                <input id="with-audio-checkbox" type="checkbox" checked>
+                <span>
+                    <i>mic_off</i>
+                    <i>mic</i>
+                </span>
             </label>
-            <button id="go-live-btn" class="waves-effect waves-dark btn yellow black-text" disabled>
-                <i class="material-icons left">cell_tower</i>
+
+            <button id="go-live-btn" disabled>
+                <i>cell_tower</i>
                 Rozpocznij transmisję
             </button>
-            <button id="stop-stream-btn" class="waves-effect waves-dark btn red white-text" style="display: none;">
-                <i class="material-icons left">stop</i>
+            <button id="stop-stream-btn" style="display: none;">
+                <i>stop</i>
                 Zakończ transmisję
             </button>
         </div>
 
-        <div id="connection-error-modal" class="modal">
+        <dialog id="connection-error-modal" class="modal">
             <div class="modal-content">
-                <h4>Błąd podczas łączenia</h4>
+                <h5>Błąd podczas łączenia</h5>
                 <p>
                     Nie udało się połączyć z serwerem wymiany informacji, co uniemożliwia rozpoczęcie transmisji.
                     Sprawdź połączenie z siecią i spróbuj ponownie później.
@@ -97,11 +99,11 @@
                     Wróć na stronę główną
                 </button>
             </div>
-        </div>
+        </dialog>
 
-        <div id="disconnection-modal" class="modal">
+        <dialog id="disconnection-modal" class="modal">
             <div class="modal-content">
-                <h4>Rozłączono z serwerem</h4>
+                <h5>Rozłączono z serwerem</h5>
                 <p>
                     Nastąpiło niespodziewane rozłączenie z serwerem wymiany informacji, co uniemożliwia dalsze
                     prowadzenie transmisji. Sprawdź połączenie z siecią i spróbuj ponownie później.
@@ -114,7 +116,9 @@
                     Wróć na stronę główną
                 </button>
             </div>
-        </div>
+        </dialog>
+
+        <div id="connected-message-snackbar" class="snackbar top">Połączono z serwerem.</div>
 
         <script src="/js/components/chat.js" defer></script>
         <script src="/js/panel.js" defer></script>

@@ -41,15 +41,10 @@ class Chat {
 			onSend(messageContent);
 		};
 
-		new EmojiPicker({
-			trigger: [
-				{
-					selector: ["#emoji-btn"],
-					insertInto: ["#message-editor"]
-				}
-			],
-			closeButton: true,
-			specialButtons: "#D2D200"
+		new emojiButtonList("emoji-btn", {
+			dropDownXAlign: "right",
+			dropDownYAlign: "top",
+			textBoxID: this.messageEditor.id
 		});
 	}
 

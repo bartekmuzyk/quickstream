@@ -1,17 +1,55 @@
 @import "components/chat.css";
 
+:root {
+    --border-color: var(--outline-variant);
+    --top-height: 80px;
+    --left-width: 300px;
+    --right-width: 350px;
+    --bottom-height: 65px;
+}
+
 body {
+    display: grid;
+    grid-template-areas:
+        "top top top"
+        "left center right"
+        "bottom bottom bottom";
+    grid-template-rows: var(--top-height) 1fr var(--bottom-height);
+    grid-template-columns: var(--left-width) 1fr var(--right-width);
+}
+
+#top {
+    grid-area: top;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+#left {
+    grid-area: left;
+    border-right: 1px solid var(--border-color);
+    padding: 5px;
+}
+
+#center {
+    grid-area: center;
+}
+
+#right {
+    grid-area: right;
+    border-left: 1px solid var(--border-color);
+    padding: 5px;
     display: flex;
     flex-direction: column;
 }
 
-#link-top-bar {
-    border-bottom: 1px solid #fff2;
-    flex-basis: 60px;
+#bottom {
+    grid-area: bottom;
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 10px;
+    border-top: 1px solid var(--border-color);
 }
 
 #link-alert {
@@ -25,15 +63,6 @@ body {
     border-radius: 20px;
 }
 
-#status-bar {
-    flex: 0 0 60px;
-    border-top: 1px solid #fff2;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 10px;
-}
-
 #live-status {
     font-size: 2rem;
     color: white;
@@ -45,23 +74,28 @@ body {
     width: 20px;
     height: 20px;
     border-radius: 20px;
-    margin: 0 20px;
+    margin: 0 10px 0 20px;
 }
 
-#status-bar[data-livestatus="stopped"] > #live-status-dot {
+#live-status-dot[data-status="stopped"] {
     background-color: #F44336;
 }
 
-#status-bar[data-livestatus="progress"] > #live-status-dot {
+#live-status-dot[data-status="progress"] {
     background-color: #FDD835;
 }
 
-#status-bar[data-livestatus="started"] > #live-status-dot {
+#live-status-dot[data-status="started"] {
     background-color: #4CAF50;
 }
 
-#status-bar[data-livestatus="connecting"] > #live-status-dot {
+#live-status-dot[data-status="connecting"] {
     background-color: gray;
+}
+
+#live-status-text {
+    flex-grow: 1;
+    margin: 0;
 }
 
 #viewers-list > div {
