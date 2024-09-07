@@ -1,12 +1,14 @@
 class Chat {
+	static messagesBox = document.getElementById("chat_messages-box");
 	/** @type {HTMLInputElement} */
-	static messageEditor = document.getElementById("message-editor");
+	static messageEditorInput = document.getElementById("chat_message-editor_input");
 	/** @type {HTMLButtonElement} */
-	static sendMessageBtn = document.getElementById("send-message-btn");
-	static chatBox = document.getElementById("chat-box");
-	static autoScrollSwitch = document.getElementById("auto-scroll-switch");
+	static messageEditorSendBtn = document.getElementById("chat_message-editor_send-btn");
+
+	static autoScrollSwitch = document.getElementById("chat_auto-scroll_switch");
 	/** @type {HTMLInputElement} */
-	static autoScrollToggle = document.getElementById("auto-scroll-toggle");
+	static autoScrollSwitchInput = document.getElementById("chat_auto-scroll_switch-input");
+
 	static fullAutoScrollSupport;
 
 	/**
@@ -23,29 +25,23 @@ class Chat {
 			}
 		}
 
-		this.messageEditor.oninput = () => {
-			this.sendMessageBtn.disabled = this.messageEditor.value.trim().length === 0;
+		this.messageEditorInput.oninput = () => {
+			this.messageEditorSendBtn.disabled = this.messageEditorInput.value.trim().length === 0;
 		};
 
-		this.messageEditor.onkeydown = ev => {
+		this.messageEditorInput.onkeydown = ev => {
 			if (ev.key === "Enter" && !ev.shiftKey) {
-				this.sendMessageBtn.click();
+				this.messageEditorSendBtn.click();
 			}
 		};
 
-		this.sendMessageBtn.onclick = () => {
-			const messageContent = this.messageEditor.value.trim();
-			this.messageEditor.value = "";
-			this.sendMessageBtn.disabled = true;
+		this.messageEditorSendBtn.onclick = () => {
+			const messageContent = this.messageEditorInput.value.trim();
+			this.messageEditorInput.value = "";
+			this.messageEditorSendBtn.disabled = true;
 
 			onSend(messageContent);
 		};
-
-		new emojiButtonList("emoji-btn", {
-			dropDownXAlign: "right",
-			dropDownYAlign: "top",
-			textBoxID: this.messageEditor.id
-		});
 	}
 
 	/**
@@ -53,7 +49,8 @@ class Chat {
 	 * @param messageContent {string}
 	 */
 	static addMessage(from, messageContent) {
-		const messageElement = document.createElement("li");
+		const messageElement = document.createElement("div");
+		messageElement.classList.add("message");
 
 		const senderElement = document.createElement("b");
 		senderElement.innerText = from;
@@ -64,15 +61,15 @@ class Chat {
 		messageElement.append(senderElement, contentElement);
 
 		const autoScroll = this.fullAutoScrollSupport ?
-			this.chatBox.scrollTop === this.chatBox.scrollTopMax
+			this.messagesBox.scrollTop === this.messagesBox.scrollTopMax
 			:
-			(this.autoScrollToggle?.checked ?? true);
+			(this.autoScrollSwitchInput?.checked ?? true);
 
-		this.chatBox.appendChild(messageElement);
+		this.messagesBox.appendChild(messageElement);
 
 		if (autoScroll) {
-			this.chatBox.scrollTo({
-				top: this.chatBox.scrollHeight
+			this.messagesBox.scrollTo({
+				top: this.messagesBox.scrollHeight
 			});
 		}
 	}

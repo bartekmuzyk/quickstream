@@ -2,7 +2,7 @@
 
 :root {
     --border-color: var(--outline-variant);
-    --top-height: 80px;
+    --top-height: 65px;
     --left-width: 300px;
     --right-width: 350px;
     --bottom-height: 65px;
@@ -103,8 +103,137 @@ body {
     display: flex;
     flex-direction: row;
     align-items: center;
+    padding: 1px 3px;
+    border-radius: 6px;
 }
 
 #viewers-list > div:nth-child(even) {
     background-color: #fff1;
+}
+
+#stream-preview {
+    background: black;
+    width: calc(100vw - var(--left-width) - var(--right-width));
+    height: calc(100vh - var(--top-height) - var(--bottom-height));
+}
+
+#stop-stream-btn {
+    background: var(--error);
+    color: var(--on-error);
+}
+
+#sound-settings {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: -2px;
+}
+
+#sound-settings > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#prepare-stream-dialog nav.scroll {
+    margin: 10px 0 20px 0;
+}
+
+#prepare-stream-dialog nav.scroll > button.circle {
+    pointer-events: none;
+}
+
+#prepare-stream-dialog_pages {
+    height: 400px;
+    overflow-y: auto;
+    width: 600px;
+    border-radius: 0;
+}
+
+#prepare-stream-dialog_pages_video-page.active {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+#prepare-stream-dialog_pages_video-page > .source-selection-box {
+    width: 100%;
+    cursor: pointer;
+}
+
+#prepare-stream-dialog_pages_video-page > .source-selection-box > div {
+    background: #212121;
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 20px;
+    --border-size: 6px;
+    border: var(--border-size) solid transparent;
+
+    /* The 3 lines below are for proper rendering of image backgrounds with the set border size */
+    background-size: calc(100% + var(--border-size) + var(--border-size));
+    background-position-x: calc(var(--border-size) * -1);
+    background-position-y: calc(var(--border-size) * -1);
+}
+
+#prepare-stream-dialog_pages_video-page > .source-selection-box:hover > div {
+    border-color: var(--primary);
+}
+
+#prepare-stream-dialog_pages_video-page > .source-selection-box > label {
+    max-width: 100%;
+    text-align: center;
+    display: block;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#prepare-stream-dialog_pages_video-page > .source-selection-box > div > i {
+    color: #FAFAFA;
+    height: 100%;
+    text-align: center;
+    width: 100%;
+    font-size: 3rem;
+}
+
+#prepare-stream-dialog_pages_summary-page.active {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+#prepare-stream-dialog_pages_summary-page > label {
+    font-size: 1.3rem;
+    text-align: center;
+}
+
+#prepare-stream-dialog_pages_summary-page > label::before {
+    /*noinspection CssNoGenericFontName*/
+    font-family: "Material Symbols Outlined";
+    font-size: 1.5rem;
+    position: relative;
+    margin-right: 5px;
+    bottom: -5px;
+}
+
+#prepare-stream-dialog_pages_summary-page_video_source_text {
+    margin-bottom: 5px;
+}
+
+#prepare-stream-dialog_pages_summary-page_video_source_text::before {
+    content: "videocam"
+}
+
+#prepare-stream-dialog_pages_summary-page_audio_source_text {
+    margin-bottom: 20px;
+}
+
+#prepare-stream-dialog_pages_summary-page_audio_source_text::before {
+    content: "volume_up"
 }

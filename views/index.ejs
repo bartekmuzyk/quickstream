@@ -20,12 +20,26 @@
         <div id="create-room-btn-wrapper">
             <button onclick="createRoom();">
                 <i>cast_connected</i>
-                Rozpocznij transmisję
+                Rozpocznij nową sesję
             </button>
-            <label>
+            <label id="creating-session-text">
                 <i>hourglass_bottom</i>
                 Tworzenie sesji...
             </label>
+        </div>
+
+        <div id="permissions-tip-banner">
+            <p>
+                Kliknij <b>"Zezwalaj"</b> lub <b>"Udostępnij"</b> w monicie po lewej, aby umożliwić wyświetlanie list urządzeń wejścia przez aplikację.
+            </p>
+
+            <h5>Korzystasz z <b style="color: #E75F34;">Firefox</b>?</h5>
+            <p>
+                Zaznacz przy okazji opcję <em>"Pamiętaj dla wszystkich kamer i mikrofonów"</em>.
+            </p>
+            <p>
+                W przeciwnym przypadku nie będzie można odczytać nazw twoich urządzeń.
+            </p>
         </div>
 
         <div class="overlay blur"></div>
@@ -34,7 +48,7 @@
             <h5>Twoja nazwa użytkownika</h5>
             <div>
                 Aby móc identyfikować się na platformie, ustaw nazwę użytkownika. Zostanie ona zapamiętana i będzie
-                używana za każdym razem w przyszłości i <b>można ją zmienić</b>.
+                używana za każdym razem w przyszłości. <b>Można ją zmienić</b>.
             </div>
             <div class="field label border">
                 <input id="profile-setup-username-input" type="text">
@@ -51,6 +65,8 @@
         </dialog>
 
         <div id="session-error-snackbar" class="snackbar error">Nie udało się utworzyć sesji.</div>
+
+        <div id="permission-error-snackbar" class="snackbar error">Odmówiono uprawnień lub wystąpił błąd.</div>
 
         <script src="/js/index.js" defer></script>
     </body>

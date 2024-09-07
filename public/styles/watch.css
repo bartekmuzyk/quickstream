@@ -93,6 +93,7 @@ body {
 #side-bar-normal-content {
     flex-direction: column;
     width: var(--normal-width);
+    padding: 10px;
 }
 
 #side-bar-collapsed-content {
@@ -163,5 +164,9 @@ body {
 }
 
 #hide-side-bar-btn {
-    margin: 5px;
+    margin-bottom: 5px;
+}
+
+#expand-side-bar-btn {
+    margin-left: 0 !important;
 }

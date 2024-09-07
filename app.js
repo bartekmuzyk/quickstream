@@ -22,18 +22,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-/**
- * @param req {Request}
- * @returns {boolean}
- */
-function isRequestFromDesktopApp(req) {
-	return req.headers["user-agent"].includes("quick-stream-recorder");
-}
-
 app.get("/", (req, res) => {
-	res.render("index", {
-		DESKTOP_APP: isRequestFromDesktopApp(req)
-	});
+	res.render("index");
 });
 
 app.post("/sesja", (req, res) => {
@@ -49,27 +39,34 @@ app.get("/panel", (req, res) => {
 	const sessionId = req.query["sessionId"];
 
 	if (!sessionId || !(sessionId in db.sessions)) {
-		res.send("Nieprawidłowe ID sesji.");
+		res.render("invalid", {
+			title: "Nieprawidłowe ID sesji.",
+			description: "Nie podano identyfikatora sesji lub ta po prostu już nie istnieje."
+		});
 		return;
 	}
 
 	const session = db.sessions[sessionId];
 
 	if (session.ownerKey !== req.query["ownerKey"]) {
-		res.send("Nieprawidłowy klucz uwierzytelniający.");
+		res.render("invalid", {
+			title: "Nieprawidłowy klucz.",
+			description: "Podany klucz uwierzytelniający jest inny niż ten, który wymagany jest do kontrolowania transmisji."
+		});
 		return;
 	}
 
-	res.render("panel", {
-		DESKTOP_APP: isRequestFromDesktopApp(req)
-	});
+	res.render("panel");
 });
 
 app.get("/ogladaj", (req, res) => {
 	const sessionId = req.query["id"];
 
 	if (!sessionId || !(sessionId in db.sessions)) {
-		res.send("Nieprawidłowe ID sesji (stream został zakończony?).");
+		res.render("invalid", {
+			title: "Nieprawidłowe ID sesji.",
+			description: "Ta transmisja prawdopodobnie została już zakończona lub nigdy nie istniała."
+		});
 		return;
 	}
 

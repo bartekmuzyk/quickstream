@@ -4,6 +4,8 @@ const profileSetupUsernameInput = document.getElementById("profile-setup-usernam
 const profileSetupContinueBtn = document.getElementById("profile-setup-continue-btn");
 /** @type {HTMLDivElement} */
 const createRoomBtnWrapper = document.getElementById("create-room-btn-wrapper");
+const creatingSessionText = document.getElementById("creating-session-text");
+const permissionsTipBanner = document.getElementById("permissions-tip-banner");
 
 const username = localStorage.getItem("username")?.trim();
 
@@ -34,7 +36,30 @@ profileSetupUsernameInput.oninput = () => {
 };
 
 async function createRoom() {
+	creatingSessionText.innerHTML = "<i>security</i>&nbsp;Sprawdzanie uprawnień...";
 	createRoomBtnWrapper.setAttribute("data-clicked", "1");
+	permissionsTipBanner.className = "active";
+
+	/** @type {?MediaStream} */
+	let potentialStream = null;
+
+	try {
+		potentialStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+	} catch (e) {
+		console.log("Permissions denied or error:", e);
+		createRoomBtnWrapper.setAttribute("data-clicked", "0");
+		ui("#permission-error-snackbar", 2000);
+	}
+
+	permissionsTipBanner.className = "";
+
+	if (!potentialStream) {
+		return;
+	}
+
+	potentialStream.getTracks().forEach(track => track.stop());
+
+	creatingSessionText.innerHTML = "<i>hourglass_bottom</i>&nbsp;Tworzenie sesji...";
 
 	await fetch("/sesja", {
 		method: "POST"

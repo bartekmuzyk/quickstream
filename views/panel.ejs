@@ -5,24 +5,18 @@
         <title>QuickStream - Panel</title>
         <% include common/head.ejs %>
         <link rel="stylesheet" href="/styles/panel.css" />
-        <link rel="stylesheet" href="/styles/components/emojibuttonlistjs.css" />
-        <script src="/js/components/emojibuttonlistjs.js"></script>
     </head>
     <body>
         <div id="top">
             <img src="img/logo.png" height="100%" style="padding: 10px;" />
             <div style="flex-grow: 1;"></div>
-            <button id="copy-safe-link-btn" class="border">
-                <i>link</i>
-                Kopiuj link do transmisji dla widzów
-            </button>
         </div>
 
         <div id="left">
-            <h4>
-                <i>people</i>
+            <h6>
+                <i style="top: -1px;">people</i>
                 Widzowie
-            </h4>
+            </h6>
             <div id="viewers-list">
 
             </div>
@@ -33,56 +27,164 @@
         </div>
 
         <div id="right">
-            <h4>
-                <i>chat</i>
+            <h6>
+                <i style="top: -1px;">chat</i>
                 Czat na żywo
-            </h4>
+            </h6>
 
-            <div id="auto-scroll-switch" class="switch" style="display: none;">
-                <label class="switch">
-                    <input id="auto-scroll-toggle" type="checkbox">
-                    <span>Auto-przewijanie</span>
-                </label>
-            </div>
-            <div id="chat-box-wrapper">
-                <ul id="chat-box"></ul>
-            </div>
-            <div style="flex: 0 0 auto; display: flex; flex-direction: row; align-items: center; padding-left: 10px;">
-                <div class="field label round small border" style="margin: 0;">
-                    <input id="message-editor" type="text">
-                    <label>Wyślij wiadomość</label>
-                </div>
-
-                <button id="emoji-btn" class="transparent circle">
-                    <i>mood</i>
-                </button>
-                <button id="send-message-btn" class="transparent circle" disabled>
-                    <i>send</i>
-                </button>
-            </div>
+            <% include components/chat.ejs %>
         </div>
 
         <div id="bottom">
             <div id="live-status-dot" data-status="connecting"></div>
             <h5 id="live-status-text" class="small">Łączenie z serwerem...</h5>
 
-            <label class="switch icon">
-                <input id="with-audio-checkbox" type="checkbox" checked>
-                <span>
-                    <i>mic_off</i>
-                    <i>mic</i>
-                </span>
-            </label>
-
-            <button id="go-live-btn" disabled>
-                <i>cell_tower</i>
-                Rozpocznij transmisję
+            <button id="copy-safe-link-btn" class="border">
+                <i>link</i>
+                Kopiuj link do transmisji dla widzów
+            </button>
+            <button id="prepare-stream-btn" data-ui="#prepare-stream-dialog" disabled>
+                <i>tune</i>
+                Przygotuj
             </button>
             <button id="stop-stream-btn" style="display: none;">
                 <i>stop</i>
                 Zakończ transmisję
             </button>
         </div>
+
+        <dialog id="prepare-stream-dialog">
+            <h5>Przygotuj scenę...</h5>
+            <div>
+                <nav class="scroll">
+                    <button class="circle small">
+                        <i>videocam</i>
+                    </button>
+                    <div>Wideo</div>
+
+                    <hr class="max">
+
+                    <button id="prepare-stream-dialog_steppers_audio" class="circle small fill">
+                        <i>volume_up</i>
+                    </button>
+                    <div>Audio</div>
+
+                    <hr class="max">
+
+                    <button id="prepare-stream-dialog_steppers_summary" class="circle small fill">
+                        <i>checklist</i>
+                    </button>
+                    <div>Podsumowanie</div>
+                </nav>
+
+                <div id="prepare-stream-dialog_pages">
+                    <div id="prepare-stream-dialog_pages_video-page" class="page active">
+                        <div class="source-selection-box">
+                            <div>
+                                <i>desktop_windows</i>
+                            </div>
+                            <label>
+                                Z komputera
+                            </label>
+                        </div>
+
+                        <div class="source-selection-box">
+                            <div>
+                                <i>desktop_windows</i>
+                            </div>
+                            <label>
+                                Z komputera
+                            </label>
+                        </div>
+
+                        <div class="source-selection-box">
+                            <div>
+                                <i>desktop_windows</i>
+                            </div>
+                            <label>
+                                Z komputera
+                            </label>
+                        </div>
+
+                        <div class="source-selection-box">
+                            <div>
+                                <i>desktop_windows</i>
+                            </div>
+                            <label>
+                                Z komputera
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="prepare-stream-dialog_pages_audio-page" class="page">
+                        <div class="field middle-align">
+                            <nav>
+                                <div class="max">
+                                    <h6>Transmisja z dźwiękiem</h6>
+                                    <div>Ta opcja zdecyduje, czy Twoja transmisja będzie miała dźwięk.</div>
+                                </div>
+                                <label class="switch">
+                                    <input id="prepare-stream-dialog_pages_audio-page_audio-enabled" type="checkbox" checked>
+                                    <span></span>
+                                </label>
+                            </nav>
+                        </div>
+
+                        <div style="height: 1px;"></div>
+
+                        <div class="field middle-align">
+                            <nav>
+                                <div class="max">
+                                    <h6><i style="top: -2px;">google_home_devices</i> Dźwięk z komputera</h6>
+                                    <div>Zaznacz tę opcję aby spróbować udostępnić również dźwięk z komputera obok zewnętrznego urządzenia audio. <b>Nie działa we wszystkich przeglądarkach. Zalecane Chromium.</b></div>
+                                </div>
+                                <label class="switch">
+                                    <input id="prepare-stream-dialog_pages_audio-page_audio-from-pc" type="checkbox">
+                                    <span></span>
+                                </label>
+                            </nav>
+                        </div>
+
+                        <div style="height: 10px;"></div>
+
+                        <label class="checkbox" style="margin-left: 10px;">
+                            <input id="prepare-stream-dialog_pages_audio-page_audio-from-device" type="checkbox">
+                            <span>Dźwięk z zewn. urządzenia audio</span>
+                        </label>
+
+                        <div class="field label suffix border">
+                            <select id="prepare-stream-dialog_pages_audio-page_audio-input-selector"></select>
+                            <label>Urządzenie wejścia</label>
+                            <i>arrow_drop_down</i>
+                        </div>
+
+                        <button id="prepare-stream-dialog_pages_audio-page_next-btn" style="float: right;">
+                            Dalej
+                            <i>chevron_right</i>
+                        </button>
+                    </div>
+
+                    <div id="prepare-stream-dialog_pages_summary-page" class="page">
+                        <h1 class="large">Gotowe!</h1>
+                        <label id="prepare-stream-dialog_pages_summary-page_video_source_text"></label>
+                        <label id="prepare-stream-dialog_pages_summary-page_audio_source_text"></label>
+                        <button id="go-live-btn" class="extra">
+                            <i>cell_tower</i>
+                            Rozpocznij transmisję
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <nav class="right-align no-space">
+                <button id="prepare-stream-dialog_back-btn" class="transparent link" disabled>
+                    <i>arrow_back</i>
+                    Wstecz
+                </button>
+                <div style="flex-grow: 1;"></div>
+                <button class="transparent link" data-ui="#prepare-stream-dialog">Minimalizuj</button>
+            </nav>
+        </dialog>
+
 
         <dialog id="connection-error-modal" class="modal">
             <div class="modal-content">

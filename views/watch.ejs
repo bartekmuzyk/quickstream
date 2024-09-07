@@ -1,62 +1,51 @@
 <!DOCTYPE html>
 <html lang="pl">
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>QuickStream - Transmisja użytkownika <%= streamerName %></title>
-    <link rel="stylesheet" href="/styles/main.css" />
-    <link rel="stylesheet" href="/styles/watch.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
-    <script src="js/vanillaEmojiPicker.js"></script>
-</head>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title><%= streamerName %> na QuickStream</title>
+        <% include common/head.ejs %>
+        <link rel="stylesheet" href="/styles/watch.css" />
+    </head>
     <body>
         <div id="stream-viewer" style="display: none;">
             <div id="stream-player-wrapper">
                 <video id="stream-player"></video>
             </div>
             <div id="side-bar" data-collapsed="0">
+                <!-- Normal content -->
                 <div id="side-bar-normal-content">
-                    <button id="hide-side-bar-btn" class="btn-flat waves-effect waves-light white-text">
+                    <button id="hide-side-bar-btn" class="small">
                         Zwiń boczny pasek
-                        <i class="material-icons right">arrow_forward</i>
+                        <i>arrow_forward</i>
                     </button>
-                    <div id="chat-box-wrapper">
-                        <ul id="chat-box"></ul>
-                    </div>
-                    <div style="flex: 0 0 auto; display: flex; flex-direction: row; align-items: center; padding-left: 10px;">
-                        <input id="message-editor" class="white-text" type="text" placeholder="Wyślij wiadomość na czacie" />
-                        <button id="emoji-btn" class="btn-flat grey darken-4 waves-effect waves-light white-text">
-                            <i class="material-icons">mood</i>
-                        </button>
-                        <button id="send-message-btn" class="btn-flat grey darken-4 waves-effect waves-light white-text" disabled>
-                            <i class="material-icons">send</i>
-                        </button>
-                    </div>
+
+                    <% include components/chat.ejs %>
                 </div>
+
+                <!-- Collapsed content -->
                 <div id="side-bar-collapsed-content">
-                    <button id="expand-side-bar-btn" class="btn-flat waves-effect waves-light white-text">
-                        <i class="material-icons">arrow_back</i>
+                    <button id="expand-side-bar-btn" class="transparent circle right-round large">
+                        <i>arrow_back</i>
                     </button>
                 </div>
             </div>
         </div>
+
         <div id="splash-screen">
             <img id="splash-logo" src="/img/logo.png" />
             <label id="splash-streamer-info">
-                <i class="material-icons" style="font-size: inherit; position: relative; top: 4px;">cast_connected</i>
+                <i>cast_connected</i>
                 <span>Transmisja użytkownika <b><%= streamerName %></b></span>
             </label>
             <hr class="animated-hr" style="margin: 10px 0;"/>
             <div id="watch-btn-wrapper">
-                <button id="watch-btn" class="btn-large yellow black-text waves-effect waves-dark pulse">
-                    <i class="material-icons left">chevron_right</i>
+                <button id="watch-btn" class="large">
+                    <i>chevron_right</i>
                     Obejrzyj transmisję
                 </button>
                 <div id="loading-container">
                     <div class="lds-spinner white-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-                    <h4 id="loading-text" class="white-text" style="margin: 0;">Oczekiwanie na rozpoczęcie transmisji...</h4>
+                    <h5 id="loading-text" style="margin: 0 !important;">Oczekiwanie na rozpoczęcie transmisji...</h5>
                 </div>
             </div>
         </div>

@@ -1,5 +1,3 @@
-M.AutoInit(null);
-
 const splashScreen = document.getElementById("splash-screen");
 const streamViewer = document.getElementById("stream-viewer");
 const loadingText = document.getElementById("loading-text");
@@ -16,8 +14,6 @@ const username = localStorage.getItem("username")?.trim();
 if (!username) {
 	location.assign("/")
 }
-
-M.toast({ html: `Oglądasz jako&nbsp;<b>${username}</b>`, displayLength: 1500 });
 
 const params = new URLSearchParams(location.search);
 const sessionId = params.get("id");
